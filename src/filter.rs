@@ -61,8 +61,17 @@ mod filter_tests {
 
     #[test]
     fn empty_keyword_returns_no_results() {
-        let results = filter_lines(CONTENT, "", FilterMode::Contains);
+        assert!(filter_lines("Rust\nGo", "", FilterMode::Contains).is_empty());
 
-        assert!(results.is_empty());
+        assert!(filter_lines("Rust\nGo", "", FilterMode::Exclude).is_empty());
+
+        assert!(filter_lines("Rust\nGo", "", FilterMode::StartsWith).is_empty());
+    }
+
+    #[test]
+    fn preserves_line_numbers_after_filtering() {
+        let results = filter_lines("Rust\nGo\nRust is fast", "Rust", FilterMode::Contains);
+
+        assert_eq!(results, vec![(1, "Rust"), (3, "Rust is fast")]);
     }
 }

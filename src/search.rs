@@ -1,5 +1,5 @@
 /// 搜索包含指定关键字的文本行
-/// 
+///
 /// 返回 (行号， 行内容)，行号从1开始
 /// 行内容借用自原始文本，不会复制每一行的字符串
 pub fn search_lines<'a>(content: &'a str, keyword: &str) -> Vec<(usize, &'a str)> {
@@ -38,6 +38,18 @@ mod tests {
     fn ignores_empty_keyword() {
         let results = search_lines("Hello\nWorld", "");
 
+        assert!(results.is_empty());
+    }
+
+    #[test]
+    fn preserves_origin_line_numbers() {
+        let results = search_lines("first\nsecond Rust\nthird\nfourth Rust", "Rust");
+        assert_eq!(results, vec![(2, "second Rust"), (4, "fourth Rust")]);
+    }
+
+    #[test]
+    fn handles_empty_content() {
+        let results = search_lines("", "Rust");
         assert!(results.is_empty());
     }
 }

@@ -41,4 +41,21 @@ mod tests {
             }
         );
     }
+
+    #[test]
+    fn counts_unicode_characters_and_utf8_bytes() {
+        let stats = count_text("你好\nRust");
+
+        assert_eq!(stats.lines, 2);
+        assert_eq!(stats.words, 2);
+        assert_eq!(stats.characters, 7);
+        assert_eq!(stats.bytes, 11);
+    }
+
+    #[test]
+    fn trailing_newline_does_not_add_an_extra_line() {
+        let stats = count_text("one\ntwo\n");
+
+        assert_eq!(stats.lines, 2);
+    }
 }
