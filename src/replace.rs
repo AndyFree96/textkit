@@ -1,5 +1,5 @@
 /// 替换文本中所有不重叠的匹配项
-///
+/// 
 /// 返回替换后的字符串和实际替换次数
 /// 空关键字不执行替换
 pub fn replace_text(content: &str, pattern: &str, replacement: &str) -> (String, usize) {

@@ -7,7 +7,6 @@ pub enum FilterMode {
 }
 
 /// 根据过滤模式筛选文本行
-///
 /// 返回的含内容借用自原始文本，不复制每一行
 pub fn filter_lines<'a>(
     content: &'a str,

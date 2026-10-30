@@ -1,8 +1,7 @@
 /// 搜索包含指定关键字的文本行
-///
+/// 
 /// 返回 (行号， 行内容)，行号从1开始
 /// 行内容借用自原始文本，不会复制每一行的字符串
-
 pub fn search_lines<'a>(content: &'a str, keyword: &str) -> Vec<(usize, &'a str)> {
     if keyword.is_empty() {
         return Vec::new();
