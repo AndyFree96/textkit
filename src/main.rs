@@ -1,12 +1,13 @@
 use std::{env, fs};
 
-use textkit::{FilterMode, filter_lines, search_lines};
+use textkit::{FilterMode, filter_lines, search_lines, replace_text};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     match args.get(1).map(String::as_str) {
         Some("search") => run_search(&args),
         Some("filter") => run_filter(&args),
+        Some("replace") => run_replace(&args),
         Some(_) if args.len() == 2 => run_stats(&args[1]),
         _ => {
             print_usage();
@@ -64,6 +65,7 @@ fn print_usage() {
     eprintln!("    textkit <file>");
     eprintln!("    textkit search <file> <keyword>");
     eprintln!("    textkit fliter <file> <keyword> [--exclude|--starts-with]");
+    eprintln!("    textkit replace <file> <pattern> <replacement>");
 }
 
 fn run_filter(args: &[String]) {
@@ -93,4 +95,20 @@ fn run_filter(args: &[String]) {
     }
 
     println!("Filtered {} lines.", results.len());
+}
+
+fn run_replace(args: &[String]) {
+    if args.len() != 5 {
+        print_usage();
+        std::process::exit(1);
+    }
+
+    let file_path = &args[2];
+    let pattern = &args[3];
+    let replacement = &args[4];
+
+    let content = read_file(file_path);
+    let (result, count) = replace_text(&content, pattern, replacement);
+    print!("{result}");
+    println!("\nReplacements: {count}");
 }
