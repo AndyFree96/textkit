@@ -14,9 +14,13 @@ pub struct Cli {
 
 #[derive(Debug, Subcommand)]
 pub enum Commands {
+    /// Count lines, words, characters, and bytes.
     Stats(FileArgs),
+    /// Search for lines containing a keyword.
     Search(SearchArgs),
+    /// Filter lines by a keyword.
     Filter(FilterArgs),
+    /// Replace all occurrences of a pattern.
     Replace(ReplaceArgs),
 }
 
